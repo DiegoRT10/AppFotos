@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">appFotos</string>
+    <string name="screen_name_login">Login</string>
+    <string name="screen_name_inicio">Inicio</string>
+    <string name="screen_name_infoImagen">Informacion Imagen</string>
+    <string name="screen_name_creacionImagen">Creacion Imagen</string>
+    <string name="screen_name_creditos">Creditos</string>
+    <string name="back_button">Atras</string>
 </resources>
