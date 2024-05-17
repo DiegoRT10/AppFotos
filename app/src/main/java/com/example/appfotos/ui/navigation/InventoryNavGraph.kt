@@ -1,6 +1,7 @@
 
 package com.example.inventory.ui.navigation
 
+import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -14,6 +15,9 @@ import com.example.appfotos.ui.infoImagen.InfoImagenDestination
 import com.example.appfotos.ui.infoImagen.InfoImagenScreen
 import com.example.appfotos.ui.inicio.InicioDestination
 import com.example.appfotos.ui.inicio.InicioScreen
+import com.example.appfotos.ui.login.AuthManager
+import com.example.appfotos.ui.login.SignUpDestination
+import com.example.appfotos.ui.login.SignUpScreen
 import com.example.inventory.ui.home.LoginDestination
 import com.example.inventory.ui.home.LoginScreen
 
@@ -21,18 +25,22 @@ import com.example.inventory.ui.home.LoginScreen
 
 @Composable
 fun FotoNavHost(
+    context: Context,
     navController: NavHostController,
     modifier: Modifier = Modifier,
 ) {
+    var authManager: AuthManager = AuthManager(context)
     NavHost(
         navController = navController,
         startDestination = LoginDestination.route,
         modifier = modifier
     ) {
         composable(route = LoginDestination.route) {
-            LoginScreen(
-                navigateToInicio = { navController.navigate(InicioDestination.route) },
-            )
+            LoginScreen(authManager,navController)
+        }
+
+        composable(route= SignUpDestination.route){
+            SignUpScreen(auth = authManager, navigation = navController)
         }
 
         composable(route = InicioDestination.route) {

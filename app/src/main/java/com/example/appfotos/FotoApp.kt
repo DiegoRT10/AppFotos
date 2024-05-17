@@ -1,6 +1,7 @@
 
 package com.example.inventory
 
+import android.content.Context
 import androidx.compose.material.icons.Icons.Filled
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -20,8 +21,8 @@ import com.example.inventory.ui.navigation.FotoNavHost
 
 
 @Composable
-fun FotoApp(navController: NavHostController = rememberNavController()) {
-    FotoNavHost(navController = navController)
+fun FotoApp(context: Context, navController: NavHostController = rememberNavController()) {
+    FotoNavHost(context,navController = navController)
 }
 
 
@@ -51,10 +52,5 @@ fun FotoTopAppBar(
     )
 }
 
-@Preview(showBackground = true)
-@Composable
-fun prevFoto(){
-    FotoNavHost(navController = rememberNavController())
-}
 
 

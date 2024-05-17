@@ -1,5 +1,4 @@
-
-package com.example.inventory.ui.home
+package com.example.appfotos.ui.login
 
 import android.content.Context
 import android.util.Log
@@ -35,50 +34,33 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.appfotos.R
-import com.example.inventory.ui.navigation.NavigationDestination
-import androidx.navigation.NavController
-import com.example.appfotos.ui.inicio.InicioDestination
-import com.example.appfotos.ui.login.AuthManager
-import com.example.appfotos.ui.login.AuthRes
-import com.example.appfotos.ui.login.SignUpDestination
 import com.example.appfotos.ui.theme.Purple40
+import com.example.inventory.ui.navigation.NavigationDestination
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.logEvent
 import kotlinx.coroutines.launch
 
 
-object LoginDestination : NavigationDestination {
-    override val route = "login"
-    override val titleRes = R.string.screen_name_login
+object SignUpDestination : NavigationDestination {
+    override val route = "signUp"
+    override val titleRes = R.string.screen_name_registrarse
 }
 @Composable
-fun LoginScreen(auth: AuthManager, navigation: NavController){
+fun SignUpScreen(auth: AuthManager, navigation: NavHostController){
+
+    val context = LocalContext.current
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
-    val context = LocalContext.current
     val scope = rememberCoroutineScope()
 
-    Box (modifier = Modifier.fillMaxSize()){
-        ClickableText(
-            text = AnnotatedString("¿No tienes una cuenta ? Registrate"),
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .padding(50.dp),
-            onClick = {
-               navigation.navigate(SignUpDestination.route)
-            },
-            style = TextStyle(
-                fontSize = 14.sp,
-                fontFamily = FontFamily.Default,
-                textDecoration = TextDecoration.Underline,
-                color = Purple40
-            )
-        )
-    }
     Column (
-        modifier = Modifier.fillMaxSize(),
+        modifier= Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Text(text = "Crear una cuenta", style = TextStyle(fontSize = 40.sp, color = Purple40))
         Spacer(modifier = Modifier.height(50.dp))
         TextField(
             label = { Text(text = "Correo electronico")},
@@ -95,29 +77,28 @@ fun LoginScreen(auth: AuthManager, navigation: NavController){
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             onValueChange = {password = it}
         )
-
         Spacer(modifier = Modifier.height(30.dp))
         Box(modifier = Modifier.padding(40.dp,0.dp,40.dp,0.dp)){
             Button(
                 onClick = {
-                    scope.launch {
-                        emailPassSignIn(email, password, auth,context,navigation)
-                    }
+                          scope.launch {
+                              signUp(email, password, auth, context, navigation)
+                          }
                 },
                 shape = RoundedCornerShape(50.dp),
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp)
             ) {
-                Text(text = "Iniciar sesión".uppercase())
+                Text(text = "Registrarse")
             }
         }
 
         Spacer(modifier = Modifier.height(40.dp))
         ClickableText(
-            text = AnnotatedString("¿Olvidaste tu contraseña?"),
+            text = AnnotatedString("¿Ya tienes una cuenta? Inicia sesión"),
             onClick = {
-
+               navigation.popBackStack()
             },
             style = TextStyle(
                 fontSize = 14.sp,
@@ -129,21 +110,18 @@ fun LoginScreen(auth: AuthManager, navigation: NavController){
     }
 }
 
-private suspend fun emailPassSignIn(email: String, password: String, auth: AuthManager, context: Context, navigation: NavController) {
-    if (email.isNotEmpty() && password.isNotEmpty()){
-        when(val result = auth.signInWithEmailAndPassword(email, password)){
-            is AuthRes.Success -> {
-                navigation.navigate(InicioDestination.route) {
-                    popUpTo(LoginDestination.route){
-                        inclusive=true
-                    }
-                }
-            }
-            is AuthRes.Error -> {
-                Toast.makeText(context, "Error al iniciar sesion: ${result.errorMessage}", Toast.LENGTH_SHORT).show()
-            }
+private suspend fun signUp(email: String, password: String, auth: AuthManager, context: Context, navigation: NavHostController) {
+if (email.isNotEmpty() && password.isNotEmpty()){
+    when(val result = auth.createUserWithEmailAndPassword(email, password)){
+        is AuthRes.Success -> {
+            Toast.makeText(context, "Registro exitoso", Toast.LENGTH_SHORT).show()
+            navigation.popBackStack()
         }
-    }else {
-        Toast.makeText(context,"Existen campos vacios", Toast.LENGTH_SHORT).show()
+        is AuthRes.Error -> {
+            Toast.makeText(context, "Error al registrar: ${result.errorMessage}", Toast.LENGTH_SHORT).show()
+        }
     }
+}else {
+    Toast.makeText(context,"Existen campos vacios", Toast.LENGTH_SHORT).show()
+}
 }

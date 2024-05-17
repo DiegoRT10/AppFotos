@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "468332464921",
+    "project_id": "appfotos-15ff9",
+    "storage_bucket": "appfotos-15ff9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:468332464921:android:9c478746bad80dd3729388",
+        "android_client_info": {
+          "package_name": "com.example.appfotos"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB2l1cshHjJI-an3RAYaGiEVQz3xMa_SqM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
