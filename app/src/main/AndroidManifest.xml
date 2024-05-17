@@ -31,10 +31,9 @@
             </intent-filter>
         </activity>
 
-        <!--credenciales firebase -->
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="io.alejandro.android_firebase.provider"
+            android:authorities="io.appFotos.android_firebase.provider"
             android:exported="false"
             android:grantUriPermissions="true"
             >
@@ -42,8 +41,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
-        <!-- fin credenciales -->
-
     </application>
 
 </manifest>

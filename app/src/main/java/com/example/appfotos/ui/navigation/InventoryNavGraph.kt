@@ -1,9 +1,9 @@
 
 package com.example.inventory.ui.navigation
 
+import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -15,7 +15,9 @@ import com.example.appfotos.ui.infoImagen.InfoImagenDestination
 import com.example.appfotos.ui.infoImagen.InfoImagenScreen
 import com.example.appfotos.ui.inicio.InicioDestination
 import com.example.appfotos.ui.inicio.InicioScreen
-import com.example.appfotos.utils.CloudStorageManager
+import com.example.appfotos.ui.login.AuthManager
+import com.example.appfotos.ui.login.SignUpDestination
+import com.example.appfotos.ui.login.SignUpScreen
 import com.example.inventory.ui.home.LoginDestination
 import com.example.inventory.ui.home.LoginScreen
 
@@ -23,18 +25,22 @@ import com.example.inventory.ui.home.LoginScreen
 
 @Composable
 fun FotoNavHost(
+    context: Context,
     navController: NavHostController,
     modifier: Modifier = Modifier,
 ) {
+    var authManager: AuthManager = AuthManager(context)
     NavHost(
         navController = navController,
         startDestination = LoginDestination.route,
         modifier = modifier
     ) {
         composable(route = LoginDestination.route) {
-            LoginScreen(
-                navigateToInicio = { navController.navigate(InicioDestination.route) },
-            )
+            LoginScreen(authManager,navController)
+        }
+
+        composable(route= SignUpDestination.route){
+            SignUpScreen(auth = authManager, navigation = navController)
         }
 
         composable(route = InicioDestination.route) {
@@ -55,7 +61,6 @@ fun FotoNavHost(
         }
 
         composable(route = CreacionImagenDestination.route) {
-
             CreacionImagenScreen(
                 navigateBack = { navController.popBackStack() },
                 onNavigateUp = { navController.navigateUp() }
