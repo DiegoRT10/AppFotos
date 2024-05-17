@@ -1,7 +1,6 @@
 package com.example.appfotos.ui.login
 
 import android.content.Context
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -37,9 +36,9 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.appfotos.R
 import com.example.appfotos.ui.theme.Purple40
+import com.example.appfotos.utils.AuthManager
+import com.example.appfotos.utils.AuthRes
 import com.example.inventory.ui.navigation.NavigationDestination
-import com.google.firebase.analytics.FirebaseAnalytics
-import com.google.firebase.analytics.ktx.logEvent
 import kotlinx.coroutines.launch
 
 

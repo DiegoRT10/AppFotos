@@ -111,7 +111,7 @@ private fun CreacionImagenBody(
     val file = context.createImageFile()
     val uri = FileProvider.getUriForFile(
         Objects.requireNonNull(context),
-        "io.alejandro.android_firebase"+".provider",file)
+        "io.appFotos.android_firebase"+".provider",file)
     var capturedImageUri by remember { mutableStateOf<Uri>(Uri.EMPTY) }
     var showDialogDelete by remember { mutableStateOf(false) }
 

@@ -2,7 +2,6 @@
 package com.example.inventory.ui.home
 
 import android.content.Context
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -39,8 +38,8 @@ import com.example.appfotos.R
 import com.example.inventory.ui.navigation.NavigationDestination
 import androidx.navigation.NavController
 import com.example.appfotos.ui.inicio.InicioDestination
-import com.example.appfotos.ui.login.AuthManager
-import com.example.appfotos.ui.login.AuthRes
+import com.example.appfotos.utils.AuthManager
+import com.example.appfotos.utils.AuthRes
 import com.example.appfotos.ui.login.SignUpDestination
 import com.example.appfotos.ui.theme.Purple40
 import kotlinx.coroutines.launch

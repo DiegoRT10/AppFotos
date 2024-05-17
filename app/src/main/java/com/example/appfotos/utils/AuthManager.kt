@@ -15,16 +15,7 @@ sealed class AuthRes<out T>{
 class AuthManager (private val context: Context) {
     private val auth: FirebaseAuth by lazy { Firebase.auth }
 
-    suspend fun signInAnonymously(): AuthRes<FirebaseUser> {
-        return try {
-            val result = auth.signInAnonymously().await()
-            AuthRes.Success(result.user ?: throw Exception("Error al iniciar sesion"))
-        }catch (e: Exception){
-            AuthRes.Error(e.message ?: "Error al iniciar sesión")
-        }
-    }
-
-    suspend fun createUserWithEmailAndPassword(email: String, password:String): AuthRes<FirebaseUser?>{
+    suspend fun createUserWithEmailAndPassword(email: String, password:String): AuthRes<FirebaseUser?> {
         return try {
             val authResult = auth.createUserWithEmailAndPassword(email,password).await()
             AuthRes.Success(authResult.user)
@@ -33,7 +24,7 @@ class AuthManager (private val context: Context) {
         }
     }
 
-    suspend fun signInWithEmailAndPassword(email: String, password:String): AuthRes<FirebaseUser?>{
+    suspend fun signInWithEmailAndPassword(email: String, password:String): AuthRes<FirebaseUser?> {
         return try {
             val authResult = auth.signInWithEmailAndPassword(email,password).await()
             AuthRes.Success(authResult.user)
@@ -42,7 +33,7 @@ class AuthManager (private val context: Context) {
         }
     }
 
-    suspend fun resetPassword(email: String):AuthRes<Unit>{
+    suspend fun resetPassword(email: String): AuthRes<Unit> {
         return try {
             auth.sendPasswordResetEmail(email).await()
             AuthRes.Success(Unit)

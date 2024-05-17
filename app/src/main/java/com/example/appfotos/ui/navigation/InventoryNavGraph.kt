@@ -15,7 +15,7 @@ import com.example.appfotos.ui.infoImagen.InfoImagenDestination
 import com.example.appfotos.ui.infoImagen.InfoImagenScreen
 import com.example.appfotos.ui.inicio.InicioDestination
 import com.example.appfotos.ui.inicio.InicioScreen
-import com.example.appfotos.ui.login.AuthManager
+import com.example.appfotos.utils.AuthManager
 import com.example.appfotos.ui.login.SignUpDestination
 import com.example.appfotos.ui.login.SignUpScreen
 import com.example.inventory.ui.home.LoginDestination
