@@ -3,6 +3,7 @@ package com.example.inventory.ui.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -14,6 +15,7 @@ import com.example.appfotos.ui.infoImagen.InfoImagenDestination
 import com.example.appfotos.ui.infoImagen.InfoImagenScreen
 import com.example.appfotos.ui.inicio.InicioDestination
 import com.example.appfotos.ui.inicio.InicioScreen
+import com.example.appfotos.utils.CloudStorageManager
 import com.example.inventory.ui.home.LoginDestination
 import com.example.inventory.ui.home.LoginScreen
 
@@ -53,6 +55,7 @@ fun FotoNavHost(
         }
 
         composable(route = CreacionImagenDestination.route) {
+
             CreacionImagenScreen(
                 navigateBack = { navController.popBackStack() },
                 onNavigateUp = { navController.navigateUp() }
