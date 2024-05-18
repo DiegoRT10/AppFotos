@@ -1,8 +1,9 @@
 
-package com.example.inventory.ui.home
+package com.example.appfotos.ui.login
 
 import android.content.Context
 import android.widget.Toast
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,10 +12,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -26,6 +30,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
@@ -40,9 +46,10 @@ import androidx.navigation.NavController
 import com.example.appfotos.ui.inicio.InicioDestination
 import com.example.appfotos.utils.AuthManager
 import com.example.appfotos.utils.AuthRes
-import com.example.appfotos.ui.login.SignUpDestination
 import com.example.appfotos.ui.theme.Purple40
 import kotlinx.coroutines.launch
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 
 
 object LoginDestination : NavigationDestination {
@@ -56,29 +63,28 @@ fun LoginScreen(auth: AuthManager, navigation: NavController){
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
 
-    Box (modifier = Modifier.fillMaxSize()){
-        ClickableText(
-            text = AnnotatedString("¿No tienes una cuenta ? Registrate"),
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .padding(50.dp),
-            onClick = {
-               navigation.navigate(SignUpDestination.route)
-            },
-            style = TextStyle(
-                fontSize = 14.sp,
-                fontFamily = FontFamily.Default,
-                textDecoration = TextDecoration.Underline,
-                color = Purple40
-            )
-        )
-    }
     Column (
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Spacer(modifier = Modifier.height(50.dp))
+        Column (
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ){
+            Image(
+                painter = painterResource(id = R.drawable.logo_app),
+                contentDescription = stringResource(id = R.string.app_name),
+                modifier = Modifier.size(140.dp)
+            )
+            Text(
+                text = "Donde los recuerdos nunca se pierden".uppercase(),
+                fontSize = 13.sp,
+                modifier = Modifier.padding(top = 8.dp),
+                fontWeight = FontWeight.Bold,
+                fontFamily = FontFamily.SansSerif
+            )
+        }
+        Spacer(modifier = Modifier.height(20.dp))
         TextField(
             label = { Text(text = "Correo electronico")},
             value = email,
@@ -104,6 +110,9 @@ fun LoginScreen(auth: AuthManager, navigation: NavController){
                     }
                 },
                 shape = RoundedCornerShape(50.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.Black,
+                ),
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp)
@@ -116,13 +125,29 @@ fun LoginScreen(auth: AuthManager, navigation: NavController){
         ClickableText(
             text = AnnotatedString("¿Olvidaste tu contraseña?"),
             onClick = {
-
+                navigation.navigate(ForgotPasswordDestination.route)
             },
             style = TextStyle(
-                fontSize = 14.sp,
+                fontSize = 17.sp,
                 fontFamily = FontFamily.Default,
                 textDecoration = TextDecoration.Underline,
-                color = Purple40
+                color = Color.Black
+            )
+        )
+
+        ClickableText(
+            text = AnnotatedString("¿No tienes una cuenta ? Registrate"),
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+                .padding(30.dp),
+            onClick = {
+                navigation.navigate(SignUpDestination.route)
+            },
+            style = TextStyle(
+                fontSize = 17.sp,
+                fontFamily = FontFamily.Default,
+                textDecoration = TextDecoration.Underline,
+                color = Color.Black
             )
         )
     }

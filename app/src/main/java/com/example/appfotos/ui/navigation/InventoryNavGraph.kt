@@ -1,5 +1,5 @@
 
-package com.example.inventory.ui.navigation
+package com.example.appfotos.ui.navigation
 
 import android.content.Context
 import androidx.compose.runtime.Composable
@@ -15,11 +15,13 @@ import com.example.appfotos.ui.infoImagen.InfoImagenDestination
 import com.example.appfotos.ui.infoImagen.InfoImagenScreen
 import com.example.appfotos.ui.inicio.InicioDestination
 import com.example.appfotos.ui.inicio.InicioScreen
+import com.example.appfotos.ui.login.ForgotPasswordDestination
+import com.example.appfotos.ui.login.ForgotPasswordScreen
 import com.example.appfotos.utils.AuthManager
 import com.example.appfotos.ui.login.SignUpDestination
 import com.example.appfotos.ui.login.SignUpScreen
-import com.example.inventory.ui.home.LoginDestination
-import com.example.inventory.ui.home.LoginScreen
+import com.example.appfotos.ui.login.LoginDestination
+import com.example.appfotos.ui.login.LoginScreen
 
 
 
@@ -40,7 +42,19 @@ fun FotoNavHost(
         }
 
         composable(route= SignUpDestination.route){
-            SignUpScreen(auth = authManager, navigation = navController)
+            SignUpScreen(
+                auth = authManager,
+                navigation = navController,
+                onNavigateUp = { navController.navigateUp() }
+            )
+        }
+
+        composable(route= ForgotPasswordDestination.route){
+            ForgotPasswordScreen(
+                auth = authManager,
+                navigation = navController,
+                onNavigateUp = {navController.popBackStack()}
+            )
         }
 
         composable(route = InicioDestination.route) {

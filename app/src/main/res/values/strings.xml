@@ -6,5 +6,6 @@
     <string name="screen_name_creacionImagen">Creacion Imagen</string>
     <string name="screen_name_creditos">Creditos</string>
     <string name="screen_name_registrarse">Registrarse</string>
+    <string name="screen_name_forgotPassword">Olvide mi contraseña</string>
     <string name="back_button">Atras</string>
 </resources>

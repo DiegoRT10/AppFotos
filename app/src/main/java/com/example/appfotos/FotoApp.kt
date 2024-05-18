@@ -13,11 +13,10 @@ import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.appfotos.R
-import com.example.inventory.ui.navigation.FotoNavHost
+import com.example.appfotos.ui.navigation.FotoNavHost
 
 
 @Composable
