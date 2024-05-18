@@ -18,6 +18,7 @@ class CloudStorageManager (context: Context){
 
     fun getStorageReference(): StorageReference {
         return storageRef.child("photos").child(userId ?: "")
+        //return storageRef.child("photos")
     }
 
     fun downloadImage(context: Context, imageUrl: String, fileName: String) {

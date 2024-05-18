@@ -117,7 +117,7 @@ private fun CreacionImagenBody(
 
     val cameraLauncher = rememberLauncherForActivityResult(ActivityResultContracts.TakePicture()){
         if (it){
-            Toast.makeText(context,"Foto tomada", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context,"Foto tomada y cargada en la nube", Toast.LENGTH_SHORT).show()
             capturedImageUri = uri
             capturedImageUri?.let { uri ->
                 scope.launch {
@@ -129,15 +129,32 @@ private fun CreacionImagenBody(
         }
     }
 
-    val permissionLauncher = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()){
-        if (it){
-            Toast.makeText(context,"Permiso autorizado", Toast.LENGTH_SHORT).show()
-            cameraLauncher.launch(uri)
-        }else {
-            Toast.makeText(context, "Permiso denegado", Toast.LENGTH_SHORT).show()
+    val galleryLauncher = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { resultUri ->
+        resultUri?.let {
+            Toast.makeText(context, "Imagen seleccionada y cargada en la nube", Toast.LENGTH_SHORT).show()
+            scope.launch {
+                storage.uploadFile(file.name, resultUri)
+            }
         }
     }
 
+    val permissionLauncher = rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+        val cameraGranted = permissions[Manifest.permission.CAMERA] ?: false
+        val readStorageGranted = permissions[Manifest.permission.READ_EXTERNAL_STORAGE] ?: false
+
+        if (cameraGranted) {
+            Toast.makeText(context, "Permiso de cámara autorizado", Toast.LENGTH_SHORT).show()
+            cameraLauncher.launch(uri)
+        } else {
+            Toast.makeText(context, "Permiso de cámara denegado", Toast.LENGTH_SHORT).show()
+        }
+
+        if (readStorageGranted) {
+            Toast.makeText(context, "Permiso de almacenamiento autorizado", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(context, "Permiso de almacenamiento denegado", Toast.LENGTH_SHORT).show()
+        }
+    }
 
     Column(
         modifier = modifier
@@ -152,13 +169,23 @@ private fun CreacionImagenBody(
             if(permissionCheckResult == PackageManager.PERMISSION_GRANTED){
                 cameraLauncher.launch(uri)
             }else{
-                permissionLauncher.launch(Manifest.permission.CAMERA)
+                permissionLauncher.launch(arrayOf(Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE))
             }
         }) {
             Text(text = "Capturar Imagen")
         }
         Spacer(modifier = Modifier.height(20.dp))
-        Button(onClick = { }) {
+        Button(onClick = {
+            galleryLauncher.launch("image/*")
+
+            val permissionCheckResult = ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE)
+            if (permissionCheckResult == PackageManager.PERMISSION_GRANTED) {
+                galleryLauncher.launch("image/*")
+            } else {
+                permissionLauncher.launch(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE))
+            }
+
+        }) {
             Text(text = "Cargar Imagen")
         }
     }
