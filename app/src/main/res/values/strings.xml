@@ -8,4 +8,7 @@
     <string name="screen_name_registrarse">Registrarse</string>
     <string name="screen_name_forgotPassword">Olvide mi contraseña</string>
     <string name="back_button">Atras</string>
+    <string name="app_description">
+        La app Momentos permite la gestión de fotografías en tiempo real. Solo es necesaria una cuenta y muchas fotografías por guardar.
+    </string>
 </resources>
