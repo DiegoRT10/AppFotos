@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
@@ -45,9 +46,8 @@ object InicioDestination : NavigationDestination {
 fun InicioScreen(
     navigateToInfoImagen: () -> Unit,
     navigateToCreaditos: () -> Unit,
-    navigateBack: () -> Unit,
     onNavigateUp: () -> Unit,
-    canNavigateBack: Boolean = true,
+    canNavigateBack: Boolean = false,
     modifier: Modifier = Modifier,
     viewModel: InicioViewModel = viewModel()
 ) {
@@ -60,19 +60,12 @@ fun InicioScreen(
                 title = stringResource(InicioDestination.titleRes),
                 canNavigateBack = canNavigateBack,
                 navigateUp = onNavigateUp,
-                scrollBehavior = scrollBehavior
+                scrollBehavior = scrollBehavior,
+                goToInfo = navigateToCreaditos
             )
         },
         floatingActionButton = {
             Row {
-
-                Text(
-                    text = "V.1.0.0",
-                    style = MaterialTheme.typography.titleSmall,
-                    modifier = modifier.padding(top = 40.dp)
-                )
-                Spacer(modifier = Modifier.width(10.dp))
-
                 FloatingActionButton(
                     onClick = navigateToInfoImagen,
                     shape = MaterialTheme.shapes.medium,
@@ -83,31 +76,15 @@ fun InicioScreen(
                         )
                 ) {
                     Icon(
-                        imageVector = Icons.Default.ArrowForward,
+                        imageVector = Icons.Default.Add,
                         contentDescription = stringResource(R.string.screen_name_inicio)
-                    )
-                }
-
-                Spacer(modifier = Modifier.width(10.dp))
-
-                FloatingActionButton(
-                    onClick = navigateToCreaditos,
-                    shape = MaterialTheme.shapes.medium,
-                    modifier = Modifier
-                        .padding(
-                            end = WindowInsets.safeDrawing.asPaddingValues()
-                                .calculateEndPadding(LocalLayoutDirection.current)
-                        )
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.AccountBox,
-                        contentDescription = stringResource(R.string.screen_name_creditos)
                     )
                 }
 
             }
 
         },
+
 
     ) { innerPadding ->
         InicioBody(

@@ -61,7 +61,6 @@ fun FotoNavHost(
             InicioScreen(
                 navigateToInfoImagen = { navController.navigate(InfoImagenDestination.route) },
                 navigateToCreaditos = { navController.navigate(CreditosDestination.route) },
-                navigateBack = { navController.popBackStack() },
                 onNavigateUp = { navController.navigateUp() }
             )
         }

@@ -2,8 +2,11 @@
 package com.example.inventory
 
 import android.content.Context
+import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.Icons.Filled
+import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -16,11 +19,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.appfotos.R
+import com.example.appfotos.ui.inicio.InicioDestination
 import com.example.appfotos.ui.navigation.FotoNavHost
 
 
 @Composable
-fun FotoApp(context: Context, navController: NavHostController = rememberNavController()) {
+fun FotoApp(
+    context: Context,
+    navController: NavHostController = rememberNavController()
+) {
     FotoNavHost(context,navController = navController)
 }
 
@@ -32,7 +39,8 @@ fun FotoTopAppBar(
     canNavigateBack: Boolean,
     modifier: Modifier = Modifier,
     scrollBehavior: TopAppBarScrollBehavior? = null,
-    navigateUp: () -> Unit = {}
+    navigateUp: () -> Unit = {},
+    goToInfo: () -> Unit = {}
 ) {
     CenterAlignedTopAppBar(
         title = { Text(title) },
@@ -47,7 +55,18 @@ fun FotoTopAppBar(
                     )
                 }
             }
+        },
+        actions = {
+            if (title == stringResource(id = InicioDestination.titleRes)){
+                IconButton(onClick = goToInfo) {
+                    Icon(
+                        imageVector = Icons.Default.Info,
+                        contentDescription = "Información"
+                    )
+                }
+            }
         }
+
     )
 }
 
