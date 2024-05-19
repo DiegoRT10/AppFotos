@@ -59,7 +59,7 @@ fun FotoNavHost(
 
         composable(route = InicioDestination.route) {
             InicioScreen(
-                navigateToInfoImagen = { navController.navigate(InfoImagenDestination.route) },
+                navigateToCreateImage = { navController.navigate(CreacionImagenDestination.route) },
                 navigateToCreaditos = { navController.navigate(CreditosDestination.route) },
                 onNavigateUp = { navController.navigateUp() }
             )

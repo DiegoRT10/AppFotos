@@ -4,6 +4,9 @@ import android.app.DownloadManager
 import android.content.Context
 import android.net.Uri
 import android.os.Environment
+import com.example.appfotos.models.TemaModel
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ListResult
 import com.google.firebase.storage.StorageReference
@@ -39,10 +42,27 @@ class CloudStorageManager (context: Context){
         deleteTask.await()
     }
 
-    suspend fun uploadFile(fileName: String, filePath: Uri){
+    suspend fun uploadFile(fileName: String, filePath: Uri,id:String){
         val fileRef = getStorageReference().child(fileName)
         val uploadTask = fileRef.putFile(filePath)
-        uploadTask.await()
+
+        val urlTask = uploadTask.continueWithTask { task ->
+            if (!task.isSuccessful) {
+                task.exception?.let {
+                    throw it
+                }
+            }
+            fileRef.downloadUrl
+        }.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val downloadUri = task.result
+                val database :DatabaseReference = FirebaseDatabase.getInstance().getReference()
+                database.child("Recuerdo").child(id).child("url").setValue(downloadUri.toString())
+            } else {
+                // Handle failures
+                // ...
+            }
+        }
     }
 
     suspend fun getUserImages(): List<Pair<String,String>> {
