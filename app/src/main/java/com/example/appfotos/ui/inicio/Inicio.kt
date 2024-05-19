@@ -94,8 +94,7 @@ fun InicioScreen(
     ) { innerPadding ->
         InicioBody(
             list = lista.value,
-            modifier = modifier.fillMaxSize(),
-            contentPadding = innerPadding,
+            modifier = modifier.padding(innerPadding)
         )
     }
 }
@@ -103,8 +102,7 @@ fun InicioScreen(
 @Composable
 private fun InicioBody(
     list: List<RecuerdoModel>,
-    modifier: Modifier = Modifier,
-    contentPadding: PaddingValues = PaddingValues(0.dp),
+    modifier: Modifier = Modifier
 ) {
     if (list.isEmpty()){
         SinFotosView()

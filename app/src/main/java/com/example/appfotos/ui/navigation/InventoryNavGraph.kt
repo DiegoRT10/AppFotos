@@ -60,7 +60,9 @@ fun FotoNavHost(
         }
 
         composable(route = InicioDestination.route) {
+            val viewModel = InicioViewModel(authManager.getCurrentUser()?.uid ?: "")
             InicioScreen(
+                viewModel = viewModel,
                 navigateToCreateImage = { navController.navigate(CreacionImagenDestination.route) },
                 navigateToCreaditos = { navController.navigate(CreditosDestination.route) },
                 onNavigateUp = { navController.navigateUp() }

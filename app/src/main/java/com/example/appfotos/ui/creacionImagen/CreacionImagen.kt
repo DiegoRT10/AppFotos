@@ -246,6 +246,7 @@ private fun CreacionImagenBody(
                             fileName =  file.name,
                             fileUri =  it,
                             id = viewModelCreacion.idImagen,
+                            idUsuario = viewModelCreacion.usuario.value?.id ?: "",
                             onFinish = {
                                 viewModelCreacion.guardarDataImagen(viewModel.temaSeleccion.value)
                                 guardar.value = false
@@ -311,6 +312,7 @@ fun SubirArchivoView(
     fileUri: Uri,
     fileName: String,
     id:String,
+    idUsuario:String,
     storage: CloudStorageManager,
     onFinish: () -> Unit
 ) {
@@ -322,7 +324,7 @@ fun SubirArchivoView(
     LaunchedEffect(key1 = fileUri) {
         isUploading = true
         uploadSuccess = try {
-            storage.uploadFile(fileName, fileUri,id)
+            storage.uploadFile(fileName, fileUri,id,idUsuario)
             true
         } catch (e: Exception) {
             e.printStackTrace()

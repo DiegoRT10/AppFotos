@@ -11,7 +11,7 @@ import com.google.firebase.database.ValueEventListener
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
-class InicioViewModel() : ViewModel() {
+class InicioViewModel(private val idUsuario:String) : ViewModel() {
 
     //variable para base de datos
     private lateinit var database: DatabaseReference
@@ -40,7 +40,7 @@ class InicioViewModel() : ViewModel() {
 
     init {
         database = FirebaseDatabase.getInstance().getReference()
-        database.child("Recuerdo").addValueEventListener(itemsListener)
+        database.child("Recuerdo").child(idUsuario).addValueEventListener(itemsListener)
     }
 
 

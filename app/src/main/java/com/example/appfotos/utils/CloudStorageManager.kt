@@ -42,7 +42,7 @@ class CloudStorageManager (context: Context){
         deleteTask.await()
     }
 
-    suspend fun uploadFile(fileName: String, filePath: Uri,id:String){
+    suspend fun uploadFile(fileName: String, filePath: Uri, id:String,idUsuario:String){
         val fileRef = getStorageReference().child(fileName)
         val uploadTask = fileRef.putFile(filePath)
 
@@ -57,7 +57,7 @@ class CloudStorageManager (context: Context){
             if (task.isSuccessful) {
                 val downloadUri = task.result
                 val database :DatabaseReference = FirebaseDatabase.getInstance().getReference()
-                database.child("Recuerdo").child(id).child("url").setValue(downloadUri.toString())
+                database.child("Recuerdo").child(idUsuario).child(id).child("url").setValue(downloadUri.toString())
             } else {
                 // Handle failures
                 // ...

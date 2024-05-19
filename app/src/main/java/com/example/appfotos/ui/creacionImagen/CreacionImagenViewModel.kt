@@ -21,7 +21,7 @@ class CreacionImagenViewModel() : ViewModel() {
 
     fun guardarDataImagen(tema:TemaModel?){
         val recuerdoModel = RecuerdoModel(id = idImagen, tema = tema, usuario = usuario.value)
-        database.child("Recuerdo").child(idImagen).setValue(recuerdoModel.toMap())
+        database.child("Recuerdo").child(usuario.value?.id ?: "").child(idImagen).setValue(recuerdoModel.toMap())
     }
 
     //buscamos el usuario al conseguir el uid
