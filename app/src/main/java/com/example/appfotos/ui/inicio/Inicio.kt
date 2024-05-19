@@ -26,9 +26,11 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -37,7 +39,9 @@ import com.example.appfotos.R
 import com.example.inventory.ui.navigation.NavigationDestination
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.appfotos.models.RecuerdoModel
+import com.example.appfotos.utils.CloudStorageManager
 import com.example.inventory.FotoTopAppBar
+import kotlinx.coroutines.launch
 
 
 object InicioDestination : NavigationDestination {
@@ -104,12 +108,34 @@ private fun InicioBody(
     list: List<RecuerdoModel>,
     modifier: Modifier = Modifier
 ) {
+    val context = LocalContext.current
+    val storage = CloudStorageManager(context)
+    val scope = rememberCoroutineScope()
     if (list.isEmpty()){
         SinFotosView()
     }else{
         LazyColumn(modifier = modifier){
             items(list){recuerdo ->
-                RecuerdoCardView(recuerdoModel = recuerdo, modifier.padding(8.dp))
+                RecuerdoCardView(
+                    onDownload ={
+                            scope.launch {
+                                storage.downloadImage(
+                                    context = context,
+                                    recuerdo.url ?: "",recuerdo.id ?:"")
+                            }
+                    },
+                    onDelete = {
+                        scope.launch {
+                            storage.deleteImage(
+                                idUsuario = recuerdo.usuario?.id ?:"",
+                                idImage = recuerdo.id ?: "",
+                                urlImage = recuerdo.url ?: ""
+                            )
+                        }
+                    },
+                    recuerdoModel = recuerdo,
+                    modifier =  modifier.padding(8.dp)
+                )
             }
         }
     }

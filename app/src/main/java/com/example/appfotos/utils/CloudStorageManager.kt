@@ -2,6 +2,7 @@ package com.example.appfotos.utils
 
 import android.app.DownloadManager
 import android.content.Context
+import android.media.Image
 import android.net.Uri
 import android.os.Environment
 import com.example.appfotos.models.TemaModel
@@ -36,10 +37,16 @@ class CloudStorageManager (context: Context){
         downloadManager.enqueue(request)
     }
 
-    suspend fun deleteImage(fileName: String){
-        val fileRef = getStorageReference().child(fileName)
+    suspend fun deleteImage(urlImage: String, idUsuario: String, idImage: String){
+        val fileRef = storage.getReferenceFromUrl(urlImage)
+        //val fileRef = getStorageReference().child(fileName)
         val deleteTask = fileRef.delete()
         deleteTask.await()
+
+        //eliminamos de la base de datos tambien
+        val dataReference = FirebaseDatabase.getInstance().getReference()
+        val deleteTaskDB = dataReference.child("Recuerdo").child(idUsuario).child(idImage).removeValue()
+        deleteTaskDB.await()
     }
 
     suspend fun uploadFile(fileName: String, filePath: Uri, id:String,idUsuario:String){

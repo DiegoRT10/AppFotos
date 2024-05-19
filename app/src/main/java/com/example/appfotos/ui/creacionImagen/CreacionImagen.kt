@@ -242,7 +242,8 @@ private fun CreacionImagenBody(
             guardar.value ->{
                 capturedImageUri.let {
                     if (it != Uri.EMPTY){
-                        SubirArchivoView(storage= storage,
+                        SubirArchivoView(
+                            storage= storage,
                             fileName =  file.name,
                             fileUri =  it,
                             id = viewModelCreacion.idImagen,
