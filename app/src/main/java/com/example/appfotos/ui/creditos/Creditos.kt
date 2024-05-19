@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -37,8 +38,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.appfotos.R
-import com.example.inventory.ui.navigation.NavigationDestination
 import com.example.inventory.FotoTopAppBar
+import com.example.inventory.ui.navigation.NavigationDestination
 
 
 object CreditosDestination : NavigationDestination {
@@ -109,7 +110,7 @@ private fun CreditosBody(
        Image(
        painter = painterResource(id = R.drawable.logo_app),
        contentDescription = stringResource(id = R.string.app_name),
-       modifier = Modifier.size(140.dp)
+       modifier = Modifier.size(120.dp)
    )
        Text(
            text = "Donde los recuerdos nunca se pierden".uppercase(),
@@ -121,11 +122,12 @@ private fun CreditosBody(
        Text(
            text = stringResource(id = R.string.app_description),
            modifier=Modifier.padding(16.dp),
-           fontSize = 18.sp,
+           fontSize = 16.sp,
            textAlign = TextAlign.Justify,
            fontFamily = FontFamily.Serif
        )
        BulletPointText(bulletPoints = bulletPoints)
+       Spacer(modifier = Modifier.height(10.dp))
        Text(
            text = "Equipo de desarrollo: ",fontSize = 18.sp,
            textAlign = TextAlign.Justify,
@@ -152,7 +154,7 @@ fun BulletPointText(bulletPoints: List<String>) {
                 Text(
                     text = point,
                     style = MaterialTheme.typography.bodyMedium,
-                    fontSize = 18.sp,
+                    fontSize = 13.sp,
                     fontFamily = FontFamily.Serif
                 )
             }
