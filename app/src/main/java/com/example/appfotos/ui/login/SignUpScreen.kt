@@ -65,6 +65,7 @@ fun SignUpScreen(
     onNavigateUp: () -> Unit) {
 
     val context = LocalContext.current
+    var nombre by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     val scope = rememberCoroutineScope()
@@ -101,6 +102,14 @@ fun SignUpScreen(
             }
             Spacer(modifier = Modifier.height(30.dp))
             TextField(
+                label = { Text(text = "Nombre usuario") },
+                value = nombre,
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                onValueChange = { nombre = it }
+            )
+
+            Spacer(modifier = Modifier.height(20.dp))
+            TextField(
                 label = { Text(text = "Correo electronico") },
                 value = email,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
@@ -120,7 +129,7 @@ fun SignUpScreen(
                 Button(
                     onClick = {
                         scope.launch {
-                            signUp(email, password, auth, context, navigation)
+                            signUp(email, password,nombre, auth, context, navigation)
                         }
                     },
                     shape = RoundedCornerShape(50.dp),
@@ -152,9 +161,9 @@ fun SignUpScreen(
     }
 }
 
-private suspend fun signUp(email: String, password: String, auth: AuthManager, context: Context, navigation: NavHostController) {
+private suspend fun signUp(email: String, password: String, nombre:String, auth: AuthManager, context: Context, navigation: NavHostController) {
 if (email.isNotEmpty() && password.isNotEmpty()){
-    when(val result = auth.createUserWithEmailAndPassword(email, password)){
+    when(val result = auth.createUserWithEmailAndPassword(email, password,nombre)){
         is AuthRes.Success -> {
             Toast.makeText(context, "Registro exitoso", Toast.LENGTH_SHORT).show()
             navigation.popBackStack()

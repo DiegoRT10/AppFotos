@@ -4,6 +4,7 @@ package com.example.appfotos.ui.navigation
 import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -15,6 +16,7 @@ import com.example.appfotos.ui.infoImagen.InfoImagenDestination
 import com.example.appfotos.ui.infoImagen.InfoImagenScreen
 import com.example.appfotos.ui.inicio.InicioDestination
 import com.example.appfotos.ui.inicio.InicioScreen
+import com.example.appfotos.ui.inicio.InicioViewModel
 import com.example.appfotos.ui.login.ForgotPasswordDestination
 import com.example.appfotos.ui.login.ForgotPasswordScreen
 import com.example.appfotos.utils.AuthManager
@@ -75,6 +77,7 @@ fun FotoNavHost(
 
         composable(route = CreacionImagenDestination.route) {
             CreacionImagenScreen(
+                uid = authManager.getCurrentUser()?.uid ?: "",
                 navigateBack = { navController.popBackStack() },
                 onNavigateUp = { navController.navigateUp() }
             )

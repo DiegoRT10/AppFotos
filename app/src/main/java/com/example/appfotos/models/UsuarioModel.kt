@@ -3,23 +3,17 @@ package com.example.appfotos.models
 import com.google.firebase.database.Exclude
 import com.google.firebase.database.IgnoreExtraProperties
 
-
 @IgnoreExtraProperties
-data class RecuerdoModel(
-    val id:String? = null,
-    val url:String? = null,
-    val tema: TemaModel? = null,
-    val usuario: UsuarioModel? = null
-){
+data class UsuarioModel(
+    val id: String? = null,
+    val nombre:String? = null
+) {
     constructor() : this("", "")
     @Exclude
     fun toMap(): Map<String, Any?> {
         return mapOf(
             "id" to id,
-            "url" to url,
-            "tema" to tema?.toMap(),
-            "usuario" to usuario?.toMap()
+            "nombre" to nombre,
         )
     }
-
 }

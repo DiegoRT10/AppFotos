@@ -76,7 +76,7 @@ fun CreacionImagenScreen(
     onNavigateUp: () -> Unit,
     canNavigateBack: Boolean = true,
     modifier: Modifier = Modifier,
-    viewModel: CreacionImagenViewModel = viewModel()
+    uid:String,
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val context = LocalContext.current
@@ -94,7 +94,10 @@ fun CreacionImagenScreen(
         }
 
     ) { innerPadding ->
+        val viewModelCreacion:CreacionImagenViewModel = viewModel()
+        viewModelCreacion.obtenerUsuario(uid)
         CreacionImagenBody(
+            viewModelCreacion = viewModelCreacion,
             modifier = modifier.fillMaxSize(),
             contentPadding = innerPadding,
             storage = storage,
@@ -105,7 +108,7 @@ fun CreacionImagenScreen(
 
 @Composable
 private fun CreacionImagenBody(
-    viewModelCreacion:CreacionImagenViewModel = viewModel(),
+    viewModelCreacion:CreacionImagenViewModel,
     modifier: Modifier = Modifier,
     onBack: () -> Unit,
     contentPadding: PaddingValues = PaddingValues(0.dp),
@@ -119,7 +122,7 @@ private fun CreacionImagenBody(
         "io.appFotos.android_firebase"+".provider",file)
     var capturedImageUri by remember { mutableStateOf<Uri>(Uri.EMPTY) }
     var showDialogDelete by remember { mutableStateOf(false) }
-    val guardar = remember { mutableStateOf(false) }
+    val guardar = remember { mutableStateOf(true) }
 
     val cameraLauncher = rememberLauncherForActivityResult(ActivityResultContracts.TakePicture()){
         if (it){

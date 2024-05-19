@@ -157,6 +157,7 @@ private suspend fun emailPassSignIn(email: String, password: String, auth: AuthM
     if (email.isNotEmpty() && password.isNotEmpty()){
         when(val result = auth.signInWithEmailAndPassword(email, password)){
             is AuthRes.Success -> {
+
                 navigation.navigate(InicioDestination.route) {
                     popUpTo(LoginDestination.route){
                         inclusive=true

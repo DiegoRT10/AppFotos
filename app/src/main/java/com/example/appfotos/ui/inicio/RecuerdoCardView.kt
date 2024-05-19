@@ -1,14 +1,23 @@
 package com.example.appfotos.ui.inicio
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material.icons.filled.Face
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,6 +35,7 @@ import coil.compose.AsyncImage
 import com.example.appfotos.R
 import com.example.appfotos.models.RecuerdoModel
 import com.example.appfotos.models.TemaModel
+import com.example.appfotos.models.UsuarioModel
 
 @Composable
 fun RecuerdoCardView(
@@ -37,11 +47,8 @@ fun RecuerdoCardView(
             .fillMaxWidth()
     ) {
 
-        Box(
-            contentAlignment = Alignment.BottomEnd
-        ) {
 
-
+        Column {
             AsyncImage(
                 model = recuerdoModel.url,
                 error = painterResource(R.drawable.ic_broken_image),
@@ -57,23 +64,60 @@ fun RecuerdoCardView(
                 colors = CardDefaults.cardColors(
                     containerColor = MaterialTheme.colorScheme.surface,
                 ),
-                modifier = modifier.padding(8.dp)
+                modifier = Modifier.padding(8.dp).fillMaxWidth()
             ) {
-                Text(
-                    text = recuerdoModel.tema?.nombre ?: "",
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 18.sp,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.padding(8.dp).fillMaxWidth(),
-                )
-            }
+                Row (
+                    horizontalArrangement = Arrangement.Center,
+                    modifier = Modifier.fillMaxWidth()) {
 
+                    if (recuerdoModel.usuario != null){
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier.padding(4.dp)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Face,
+                                contentDescription = null
+                            )
+                            Text(
+                                text = recuerdoModel.usuario.nombre ?: "",
+                                fontSize = 16.sp,
+                                textAlign = TextAlign.Center,
+                                modifier = Modifier
+                                    .padding(8.dp),
+                            )
+                        }
+                    }
+
+                    if ( recuerdoModel.tema != null){
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier.padding(4.dp)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.DateRange,
+                                contentDescription = null
+                            )
+                            Text(
+                                text = recuerdoModel.tema.nombre ?: "",
+                                fontSize = 16.sp,
+                                textAlign = TextAlign.Center,
+                                modifier = Modifier
+                                    .padding(8.dp),
+                            )
+                        }
+                    }
+
+
+                }
+
+            }
         }
     }
 }
 
 @Composable
-@Preview
+@Preview(showSystemUi = true)
 fun RecuerdoCardViewPrev(){
-    RecuerdoCardView(RecuerdoModel("asd","", TemaModel("adas","asdasda")))
+    RecuerdoCardView(RecuerdoModel("asd","", TemaModel("adas","Fotos invierto"), UsuarioModel("1","Elzer")))
 }
