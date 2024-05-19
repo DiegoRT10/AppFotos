@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.AddCircle
@@ -23,6 +25,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -33,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import com.example.appfotos.R
 import com.example.inventory.ui.navigation.NavigationDestination
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.appfotos.models.RecuerdoModel
 import com.example.inventory.FotoTopAppBar
 
 
@@ -53,7 +57,7 @@ fun InicioScreen(
     viewModel: InicioViewModel = viewModel()
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
-
+    var lista = viewModel.items.collectAsState()
     Scaffold(
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
@@ -89,6 +93,7 @@ fun InicioScreen(
 
     ) { innerPadding ->
         InicioBody(
+            list = lista.value,
             modifier = modifier.fillMaxSize(),
             contentPadding = innerPadding,
         )
@@ -97,10 +102,20 @@ fun InicioScreen(
 
 @Composable
 private fun InicioBody(
+    list: List<RecuerdoModel>,
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(0.dp),
 ) {
-    SinFotosView()
+    if (list.isEmpty()){
+        SinFotosView()
+    }else{
+        LazyColumn(modifier = modifier){
+            items(list){recuerdo ->
+                RecuerdoCardView(recuerdoModel = recuerdo, modifier.padding(8.dp))
+            }
+        }
+    }
+
 }
 
 
@@ -137,5 +152,5 @@ fun SinFotosView(
 @Composable
 @Preview(showSystemUi = true)
 private fun InicioBodyPreview(){
-    InicioBody()
+    //InicioBody()
 }
