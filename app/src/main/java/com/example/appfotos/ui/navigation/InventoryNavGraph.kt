@@ -65,7 +65,8 @@ fun FotoNavHost(
                 viewModel = viewModel,
                 navigateToCreateImage = { navController.navigate(CreacionImagenDestination.route) },
                 navigateToCreaditos = { navController.navigate(CreditosDestination.route) },
-                onNavigateUp = { navController.navigateUp() }
+                onNavigateUp = { navController.navigateUp() },
+                navigation = navController
             )
         }
 

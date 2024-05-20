@@ -2,6 +2,7 @@
 package com.example.appfotos.ui.creditos
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -28,6 +29,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -99,6 +101,8 @@ private fun CreditosBody(
         "Visualizar todas tus fotografías",
         "Guardar por siempre momentos importantes"
     )
+    val isDarkTheme = isSystemInDarkTheme()
+    val tintColor = if (isDarkTheme) Color.White else Color.Unspecified
    Column(
        modifier = Modifier
            .fillMaxSize()
@@ -110,7 +114,8 @@ private fun CreditosBody(
        Image(
        painter = painterResource(id = R.drawable.logo_app),
        contentDescription = stringResource(id = R.string.app_name),
-       modifier = Modifier.size(120.dp)
+       modifier = Modifier.size(120.dp),
+       colorFilter = if (tintColor != Color.Unspecified) ColorFilter.tint(tintColor) else null
    )
        Text(
            text = "Donde los recuerdos nunca se pierden".uppercase(),

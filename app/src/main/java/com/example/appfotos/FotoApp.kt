@@ -7,6 +7,7 @@ import androidx.compose.material.icons.Icons.Filled
 import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.outlined.ExitToApp
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -40,7 +41,8 @@ fun FotoTopAppBar(
     modifier: Modifier = Modifier,
     scrollBehavior: TopAppBarScrollBehavior? = null,
     navigateUp: () -> Unit = {},
-    goToInfo: () -> Unit = {}
+    goToInfo: () -> Unit = {},
+    exitToApp: () -> Unit = {}
 ) {
     CenterAlignedTopAppBar(
         title = { Text(title) },
@@ -64,6 +66,9 @@ fun FotoTopAppBar(
                         contentDescription = "Información"
                     )
                 }
+            }
+            IconButton(onClick = exitToApp) {
+                Icon(Icons.Outlined.ExitToApp, contentDescription ="Cerrar sesion")
             }
         }
 

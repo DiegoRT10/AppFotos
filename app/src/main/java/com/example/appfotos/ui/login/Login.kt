@@ -4,6 +4,7 @@ package com.example.appfotos.ui.login
 import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -49,7 +50,9 @@ import com.example.appfotos.utils.AuthRes
 import com.example.appfotos.ui.theme.Purple40
 import kotlinx.coroutines.launch
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 
 
 object LoginDestination : NavigationDestination {
@@ -68,13 +71,17 @@ fun LoginScreen(auth: AuthManager, navigation: NavController){
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        val isDarkTheme = isSystemInDarkTheme()
+        val tintColor = if (isDarkTheme) Color.White else Color.Unspecified
+
         Column (
             horizontalAlignment = Alignment.CenterHorizontally,
         ){
             Image(
                 painter = painterResource(id = R.drawable.logo_app),
                 contentDescription = stringResource(id = R.string.app_name),
-                modifier = Modifier.size(140.dp)
+                modifier = Modifier.size(140.dp),
+                colorFilter = if (tintColor != Color.Unspecified) ColorFilter.tint(tintColor) else null
             )
             Text(
                 text = "Donde los recuerdos nunca se pierden".uppercase(),
@@ -88,7 +95,9 @@ fun LoginScreen(auth: AuthManager, navigation: NavController){
         TextField(
             label = { Text(text = "Correo electronico")},
             value = email,
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Email,
+                imeAction = ImeAction.Next),
             onValueChange = {email = it}
         )
 
@@ -97,7 +106,7 @@ fun LoginScreen(auth: AuthManager, navigation: NavController){
             label = { Text(text = "Contraseña")},
             value = password,
             visualTransformation = PasswordVisualTransformation(),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password, imeAction = ImeAction.Done),
             onValueChange = {password = it}
         )
 
@@ -112,6 +121,7 @@ fun LoginScreen(auth: AuthManager, navigation: NavController){
                 shape = RoundedCornerShape(50.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.Black,
+                    contentColor = Color.White
                 ),
                 modifier = Modifier
                     .fillMaxWidth()
@@ -131,7 +141,7 @@ fun LoginScreen(auth: AuthManager, navigation: NavController){
                 fontSize = 17.sp,
                 fontFamily = FontFamily.Default,
                 textDecoration = TextDecoration.Underline,
-                color = Color.Black
+                color = tintColor
             )
         )
 
@@ -147,7 +157,7 @@ fun LoginScreen(auth: AuthManager, navigation: NavController){
                 fontSize = 17.sp,
                 fontFamily = FontFamily.Default,
                 textDecoration = TextDecoration.Underline,
-                color = Color.Black
+                color = tintColor
             )
         )
     }

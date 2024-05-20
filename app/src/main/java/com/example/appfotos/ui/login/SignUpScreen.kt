@@ -38,6 +38,7 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextDecoration
@@ -104,7 +105,7 @@ fun SignUpScreen(
             TextField(
                 label = { Text(text = "Nombre usuario") },
                 value = nombre,
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Next),
                 onValueChange = { nombre = it }
             )
 
@@ -112,7 +113,7 @@ fun SignUpScreen(
             TextField(
                 label = { Text(text = "Correo electronico") },
                 value = email,
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email, imeAction = ImeAction.Next),
                 onValueChange = { email = it }
             )
 
@@ -121,7 +122,7 @@ fun SignUpScreen(
                 label = { Text(text = "Contraseña") },
                 value = password,
                 visualTransformation = PasswordVisualTransformation(),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password, imeAction = ImeAction.Done),
                 onValueChange = { password = it }
             )
             Spacer(modifier = Modifier.height(30.dp))

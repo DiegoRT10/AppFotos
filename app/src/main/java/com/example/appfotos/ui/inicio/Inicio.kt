@@ -20,6 +20,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.AddCircle
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -47,8 +49,11 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import com.example.appfotos.R
 import com.example.appfotos.models.RecuerdoModel
+import com.example.appfotos.ui.login.LoginDestination
+import com.example.appfotos.utils.AuthManager
 import com.example.appfotos.utils.CloudStorageManager
 import com.example.inventory.FotoTopAppBar
 import com.example.inventory.ui.navigation.NavigationDestination
@@ -68,12 +73,21 @@ fun InicioScreen(
     onNavigateUp: () -> Unit,
     canNavigateBack: Boolean = false,
     modifier: Modifier = Modifier,
-    viewModel: InicioViewModel = viewModel()
+    viewModel: InicioViewModel = viewModel(),
+    navigation: NavHostController
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val lista by viewModel.items.collectAsState()
     var searchQuery by remember { mutableStateOf(TextFieldValue("")) }
     val filteredList = lista.filter { it.tema!!.nombre!!.contains(searchQuery.text, ignoreCase = true) }
+    var showDialog by remember { mutableStateOf(false) }
+    val onLogoutConfirmed: () -> Unit = {
+        navigation.navigate(LoginDestination.route){
+            popUpTo(InicioDestination.route){
+                inclusive=true
+            }
+        }
+    }
 
     //variable para cambiar el estilo de lista
     var opcionList by remember { mutableStateOf(1) }
@@ -87,7 +101,8 @@ fun InicioScreen(
                     canNavigateBack = canNavigateBack,
                     navigateUp = onNavigateUp,
                     scrollBehavior = scrollBehavior,
-                    goToInfo = navigateToCreaditos
+                    goToInfo = navigateToCreaditos,
+                    exitToApp = {showDialog=true}
                 )
                 TextField(
                     value = searchQuery,
@@ -152,6 +167,12 @@ fun InicioScreen(
             }
         }
     ) { innerPadding ->
+        if(showDialog){
+            LogoutDialog(onConfirmLogout = {
+                onLogoutConfirmed()
+                showDialog= false
+            }, onDismiss = {showDialog=false})
+        }
         InicioBody(
             opcionList= opcionList,
             list = filteredList,
@@ -292,6 +313,19 @@ fun SinFotosView(
             }
         }
     }
+}
+
+@Composable
+fun LogoutDialog(onConfirmLogout: () -> Unit, onDismiss: () -> Unit){
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text(text = "Cerrar sesión")},
+        text = { Text(text = "¿Estas seguro de cerrar sesión?")},
+        confirmButton = {
+            Button(onClick = onConfirmLogout) { Text(text = "Aceptar")}
+        },
+        dismissButton =  { Button(onClick = onDismiss) { Text(text = "Cancelar")} }
+    )
 }
 
 @Composable
