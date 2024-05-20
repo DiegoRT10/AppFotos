@@ -87,6 +87,7 @@ dependencies {
 
     //coil
     implementation("io.coil-kt:coil-compose:2.6.0")
+    implementation("com.google.firebase:firebase-database-ktx:21.0.0")
 
     // Testing
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
