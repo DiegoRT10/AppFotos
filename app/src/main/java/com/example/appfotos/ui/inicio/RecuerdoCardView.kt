@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -154,7 +155,180 @@ fun RecuerdoCardView(
 }
 
 @Composable
+fun RecuerdoCardMini(
+    recuerdoModel: RecuerdoModel,
+    onDownload: () -> Unit,
+    onDelete:() -> Unit,
+    modifier: Modifier = Modifier
+){
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(100.dp)
+    ) {
+        Row {
+            AsyncImage(
+                model = recuerdoModel.url,
+                error = painterResource(R.drawable.ic_broken_image),
+                placeholder = painterResource(R.drawable.loading_img),
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .size(100.dp)
+                    .padding(end = 8.dp)
+            )
+
+            Column(
+                verticalArrangement = Arrangement.Center,
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .padding(end = 8.dp)
+            ) {
+                if (recuerdoModel.usuario != null){
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.padding(4.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Face,
+                            contentDescription = null
+                        )
+                        Text(
+                            text = recuerdoModel.usuario.nombre ?: "",
+                            fontSize = 18.sp,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier
+                                .padding(8.dp),
+                        )
+                    }
+                }
+
+                if ( recuerdoModel.tema != null){
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.padding(4.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.DateRange,
+                            contentDescription = null
+                        )
+                        Text(
+                            text = recuerdoModel.tema.nombre ?: "",
+                            fontSize = 18.sp,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier
+                                .padding(8.dp),
+                        )
+                    }
+                }
+            }
+
+            Column(
+                horizontalAlignment = Alignment.End,
+                verticalArrangement = Arrangement.Center,
+                modifier = Modifier.fillMaxSize()
+            ) {
+                Button(onClick = onDelete ) {
+                    Icon(
+                        imageVector = Icons.Default.Delete,
+                        contentDescription = null
+                    )
+                }
+                Button(onClick = onDownload ) {
+                    Icon(
+                        painter =  painterResource(id = R.drawable.cloud_down),
+                        contentDescription = null
+                    )
+                }
+
+            }
+
+        }
+    }
+}
+
+@Composable
+fun RecuerdoCardSimple(
+    recuerdoModel: RecuerdoModel,
+    onDownload: () -> Unit,
+    onDelete:() -> Unit,
+    modifier: Modifier = Modifier
+){
+    Card(
+        modifier = modifier
+    ) {
+        Column {
+            AsyncImage(
+                model = recuerdoModel.url,
+                error = painterResource(R.drawable.ic_broken_image),
+                placeholder = painterResource(R.drawable.loading_img),
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .height(150.dp)
+            )
+
+            Card(
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.surface,
+                ),
+                modifier = Modifier
+                    .padding(8.dp)
+                    .fillMaxWidth()
+            ) {
+                Row (
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center,
+                    modifier = Modifier.fillMaxWidth()) {
+
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.padding(4.dp)
+                    ) {
+                        Button(onClick = onDownload ) {
+                            Icon(
+                                painter =  painterResource(id = R.drawable.cloud_down),
+                                contentDescription = null
+                            )
+                        }
+                    }
+
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.padding(4.dp)
+                    ) {
+                        Button(onClick = onDelete ) {
+                            Icon(
+                                imageVector = Icons.Default.Delete,
+                                contentDescription = null
+                            )
+                        }
+                    }
+
+                }
+
+            }
+
+        }
+
+    }
+}
+
+@Composable
 @Preview(showSystemUi = false)
 fun RecuerdoCardViewPrev(){
     RecuerdoCardView( onDownload = {}, onDelete = {}, recuerdoModel =  RecuerdoModel("asd","", TemaModel("adas","Fotos invierto"), usuario = UsuarioModel("1","Elzer")))
+}
+
+
+@Composable
+@Preview
+fun RecuerdoCardMiniPrev(){
+    RecuerdoCardMini(onDownload = {}, onDelete = {}, recuerdoModel =  RecuerdoModel("asd","", TemaModel("adas","Fotos invierto"), usuario = UsuarioModel("1","Elzer")))
+}
+
+@Composable
+@Preview
+fun RecuerdoCardSimplePrevi(){
+    RecuerdoCardSimple(onDownload = {}, onDelete = {}, recuerdoModel =  RecuerdoModel("asd","", TemaModel("adas","Fotos invierto"), usuario = UsuarioModel("1","Elzer")))
 }

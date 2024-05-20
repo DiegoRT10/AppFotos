@@ -9,13 +9,18 @@ import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.AddCircle
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
@@ -70,6 +75,9 @@ fun InicioScreen(
     var searchQuery by remember { mutableStateOf(TextFieldValue("")) }
     val filteredList = lista.filter { it.tema!!.nombre!!.contains(searchQuery.text, ignoreCase = true) }
 
+    //variable para cambiar el estilo de lista
+    var opcionList by remember { mutableStateOf(1) }
+
     Scaffold(
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
@@ -89,6 +97,40 @@ fun InicioScreen(
                         .padding(8.dp),
                     placeholder = { Text("Buscar fotos por tema...") }
                 )
+
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(100.dp)
+                ) {
+                    Button(
+                        onClick = {
+                                  opcionList = 1
+                        },
+                        modifier = Modifier.padding(4.dp)
+                    ) {
+                        Text(text = "Vista extensa")
+                    }
+                    Button(
+                        onClick = {
+                            opcionList = 2
+                        },
+                        modifier = Modifier.padding(4.dp)
+                    ) {
+                        Text(text = "Lista")
+                    }
+
+                    Button(
+                        onClick = {
+                            opcionList = 3
+                        },
+                        modifier = Modifier.padding(4.dp)
+                    ) {
+                        Text(text = "Cuadricula")
+                    }
+                }
             }
         },
         floatingActionButton = {
@@ -111,6 +153,7 @@ fun InicioScreen(
         }
     ) { innerPadding ->
         InicioBody(
+            opcionList= opcionList,
             list = filteredList,
             modifier = modifier.padding(innerPadding)
         )
@@ -119,6 +162,7 @@ fun InicioScreen(
 
 @Composable
 private fun InicioBody(
+    opcionList:Int,
     list: List<RecuerdoModel>,
     modifier: Modifier = Modifier
 ) {
@@ -128,32 +172,101 @@ private fun InicioBody(
     if (list.isEmpty()) {
         SinFotosView()
     } else {
-        LazyColumn(modifier = modifier) {
-            items(list) { recuerdo ->
-                RecuerdoCardView(
-                    onDownload = {
-                        scope.launch {
-                            storage.downloadImage(
-                                context = context,
-                                recuerdo.url ?: "",
-                                recuerdo.id ?: ""
-                            )
-                        }
-                    },
-                    onDelete = {
-                        scope.launch {
-                            storage.deleteImage(
-                                idUsuario = recuerdo.usuario?.id ?: "",
-                                idImage = recuerdo.id ?: "",
-                                urlImage = recuerdo.url ?: ""
-                            )
-                        }
-                    },
-                    recuerdoModel = recuerdo,
-                    modifier = Modifier.padding(8.dp)
-                )
+
+        when(opcionList){
+            1->{
+                LazyColumn(modifier = modifier) {
+                    items(list) { recuerdo ->
+                        RecuerdoCardView(
+                            onDownload = {
+                                scope.launch {
+                                    storage.downloadImage(
+                                        context = context,
+                                        recuerdo.url ?: "",
+                                        recuerdo.id ?: ""
+                                    )
+                                }
+                            },
+                            onDelete = {
+                                scope.launch {
+                                    storage.deleteImage(
+                                        idUsuario = recuerdo.usuario?.id ?: "",
+                                        idImage = recuerdo.id ?: "",
+                                        urlImage = recuerdo.url ?: ""
+                                    )
+                                }
+                            },
+                            recuerdoModel = recuerdo,
+                            modifier = Modifier.padding(8.dp)
+                        )
+                    }
+                }
+            }
+            2->{
+                LazyColumn(modifier = modifier) {
+                    items(list) { recuerdo ->
+                        RecuerdoCardMini(
+                            onDownload = {
+                                scope.launch {
+                                    storage.downloadImage(
+                                        context = context,
+                                        recuerdo.url ?: "",
+                                        recuerdo.id ?: ""
+                                    )
+                                }
+                            },
+                            onDelete = {
+                                scope.launch {
+                                    storage.deleteImage(
+                                        idUsuario = recuerdo.usuario?.id ?: "",
+                                        idImage = recuerdo.id ?: "",
+                                        urlImage = recuerdo.url ?: ""
+                                    )
+                                }
+                            },
+                            recuerdoModel = recuerdo,
+                            modifier = Modifier.padding(8.dp)
+                        )
+
+                    }
+                }
+            }
+            3->{
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(2),
+                    modifier = modifier.padding(8.dp)
+                ) {
+                    items(list) { recuerdo ->
+                        RecuerdoCardSimple(
+                            onDownload = {
+                                scope.launch {
+                                    storage.downloadImage(
+                                        context = context,
+                                        recuerdo.url ?: "",
+                                        recuerdo.id ?: ""
+                                    )
+                                }
+                            },
+                            onDelete = {
+                                scope.launch {
+                                    storage.deleteImage(
+                                        idUsuario = recuerdo.usuario?.id ?: "",
+                                        idImage = recuerdo.id ?: "",
+                                        urlImage = recuerdo.url ?: ""
+                                    )
+                                }
+                            },
+                            recuerdoModel = recuerdo,
+                            modifier = Modifier.padding(8.dp)
+                        )
+                    }
+                }
             }
         }
+
+
+
+
     }
 }
 
