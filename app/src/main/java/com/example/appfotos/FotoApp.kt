@@ -21,6 +21,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.appfotos.R
 import com.example.appfotos.ui.inicio.InicioDestination
+import com.example.appfotos.ui.login.ForgotPasswordDestination
+import com.example.appfotos.ui.login.SignUpDestination
 import com.example.appfotos.ui.navigation.FotoNavHost
 
 
@@ -67,8 +69,10 @@ fun FotoTopAppBar(
                     )
                 }
             }
-            IconButton(onClick = exitToApp) {
-                Icon(Icons.Outlined.ExitToApp, contentDescription ="Cerrar sesion")
+            if(title != stringResource(id = SignUpDestination.titleRes) && title != stringResource(id = ForgotPasswordDestination.titleRes)){
+                IconButton(onClick = exitToApp) {
+                    Icon(Icons.Outlined.ExitToApp, contentDescription ="Cerrar sesion")
+                }
             }
         }
 

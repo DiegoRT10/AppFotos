@@ -3,6 +3,7 @@ package com.example.appfotos.ui.login
 import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -31,6 +32,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -71,6 +73,8 @@ fun SignUpScreen(
     var password by remember { mutableStateOf("") }
     val scope = rememberCoroutineScope()
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+    val isDarkTheme = isSystemInDarkTheme()
+    val tintColor = if (isDarkTheme) Color.White else Color.Unspecified
     Scaffold(
         topBar = {
             FotoTopAppBar(
@@ -91,7 +95,8 @@ fun SignUpScreen(
                 Image(
                     painter = painterResource(id = R.drawable.logo_app),
                     contentDescription = stringResource(id = R.string.app_name),
-                    modifier = Modifier.size(140.dp)
+                    modifier = Modifier.size(140.dp),
+                    colorFilter = if (tintColor != Color.Unspecified) ColorFilter.tint(tintColor) else null
                 )
                 Text(
                     text = "Donde los recuerdos nunca se pierden".uppercase(),
@@ -141,7 +146,7 @@ fun SignUpScreen(
                         .fillMaxWidth()
                         .height(50.dp)
                 ) {
-                    Text(text = "Registrarse".uppercase())
+                    Text(text = "Registrarse".uppercase(), color = Color.White)
                 }
             }
 
@@ -155,7 +160,7 @@ fun SignUpScreen(
                     fontSize = 16.sp,
                     fontFamily = FontFamily.Default,
                     textDecoration = TextDecoration.Underline,
-                    color = Color.Black
+                    color = tintColor
                 )
             )
         }
