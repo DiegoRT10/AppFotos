@@ -1,6 +1,7 @@
 package com.example.appfotos.ui.login
 
 import android.widget.Toast
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -59,6 +60,8 @@ fun ForgotPasswordScreen(
     var email by remember { mutableStateOf("") }
     val scope = rememberCoroutineScope()
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+    val isDarkTheme = isSystemInDarkTheme()
+    val tintColor = if (isDarkTheme) Color.White else Color.Unspecified
     Scaffold(
         topBar = {
             FotoTopAppBar(
@@ -77,7 +80,8 @@ fun ForgotPasswordScreen(
                 text = "Por favor ingresa el correo que pertenece a tu cuenta donde recibiras un correo de recuperación de contraseña.",
                 style = TextStyle(fontSize = 18.sp, color = Color.Black),
                 textAlign = TextAlign.Justify,
-                modifier = Modifier.padding(start = 35.dp, end = 35.dp)
+                modifier = Modifier.padding(start = 35.dp, end = 35.dp),
+                color= tintColor
             )
             Spacer(modifier = Modifier.height(30.dp))
             TextField(
@@ -116,7 +120,7 @@ fun ForgotPasswordScreen(
                         .fillMaxWidth()
                         .height(50.dp)
                 ) {
-                    Text(text = "Recuperar contraseña".uppercase())
+                    Text(text = "Recuperar contraseña".uppercase(), color= Color.White)
                 }
             }
         }
