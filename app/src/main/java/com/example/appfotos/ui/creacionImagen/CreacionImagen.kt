@@ -140,7 +140,7 @@ private fun CreacionImagenBody(
 
     }
 
-    val permissionLauncher = rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+    val permissionLauncherCamera = rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
         val cameraGranted = permissions[Manifest.permission.CAMERA] ?: false
         val readStorageGranted = permissions[Manifest.permission.READ_EXTERNAL_STORAGE] ?: false
 
@@ -150,6 +150,13 @@ private fun CreacionImagenBody(
         } else {
             Toast.makeText(context, "Permiso de cámara denegado", Toast.LENGTH_SHORT).show()
         }
+
+    }
+
+    val permissionLauncherStorage = rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+        val cameraGranted = permissions[Manifest.permission.CAMERA] ?: false
+        val readStorageGranted = permissions[Manifest.permission.READ_EXTERNAL_STORAGE] ?: false
+
 
         if (readStorageGranted) {
             Toast.makeText(context, "Permiso de almacenamiento autorizado", Toast.LENGTH_SHORT).show()
@@ -184,20 +191,19 @@ private fun CreacionImagenBody(
                 if(permissionCheckResult == PackageManager.PERMISSION_GRANTED){
                     cameraLauncher.launch(uri)
                 }else{
-                    permissionLauncher.launch(arrayOf(Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE))
+                    permissionLauncherCamera.launch(arrayOf(Manifest.permission.CAMERA))
                 }
             }) {
                 Text(text = "Tomar una foto")
             }
             Spacer(modifier = Modifier.padding(8.dp))
             Button(onClick = {
-                galleryLauncher.launch("image/*")
-
                 val permissionCheckResult = ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE)
+                println("galeria $permissionCheckResult")
                 if (permissionCheckResult == PackageManager.PERMISSION_GRANTED) {
                     galleryLauncher.launch("image/*")
                 } else {
-                    permissionLauncher.launch(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE))
+                    permissionLauncherStorage.launch(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE))
                 }
 
             }) {
