@@ -48,7 +48,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.appfotos.R
-import com.example.appfotos.ui.theme.Purple40
 import com.example.appfotos.utils.AuthManager
 import com.example.appfotos.utils.AuthRes
 import com.example.inventory.FotoTopAppBar

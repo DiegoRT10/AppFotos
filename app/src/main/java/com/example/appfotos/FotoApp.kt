@@ -4,7 +4,6 @@ package com.example.inventory
 import android.content.Context
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.Icons.Filled
-import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.outlined.ExitToApp
@@ -69,7 +68,7 @@ fun FotoTopAppBar(
                     )
                 }
             }
-            if(title != stringResource(id = SignUpDestination.titleRes) && title != stringResource(id = ForgotPasswordDestination.titleRes)){
+            if(title == stringResource(id = InicioDestination.titleRes)){
                 IconButton(onClick = exitToApp) {
                     Icon(Icons.Outlined.ExitToApp, contentDescription ="Cerrar sesion")
                 }

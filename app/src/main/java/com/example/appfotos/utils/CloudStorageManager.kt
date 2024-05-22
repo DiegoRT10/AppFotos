@@ -2,10 +2,8 @@ package com.example.appfotos.utils
 
 import android.app.DownloadManager
 import android.content.Context
-import android.media.Image
 import android.net.Uri
 import android.os.Environment
-import com.example.appfotos.models.TemaModel
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase

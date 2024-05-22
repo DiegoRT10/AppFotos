@@ -141,6 +141,7 @@ private fun CreditosBody(
        PersonCard(photo = R.drawable.alejandro_rodas, name = "Edwin Alejandro Rodas Carranza")
        PersonCard(photo = R.drawable.elzer_villela, name = "Elzer Fernando Villela Granillo")
        PersonCard(photo = R.drawable.diego_ramos, name = "Diego Alexis Ramos Torres")
+       PersonCard(photo = R.drawable.inga_samy_pinto, name = "Tutora: Mtra. Samy Eunice Pinto Castañeda")
    }
 }
 
@@ -175,7 +176,9 @@ fun PersonCard(
 ) {
     Card(
         shape = MaterialTheme.shapes.medium,
-        modifier = modifier.padding(6.dp).fillMaxWidth(),
+        modifier = modifier
+            .padding(6.dp)
+            .fillMaxWidth(),
         colors = CardDefaults.cardColors(containerColor = Color.Black)
     ) {
         Row(

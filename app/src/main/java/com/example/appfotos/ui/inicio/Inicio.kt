@@ -22,7 +22,6 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
@@ -53,7 +52,6 @@ import androidx.navigation.NavHostController
 import com.example.appfotos.R
 import com.example.appfotos.models.RecuerdoModel
 import com.example.appfotos.ui.login.LoginDestination
-import com.example.appfotos.utils.AuthManager
 import com.example.appfotos.utils.CloudStorageManager
 import com.example.inventory.FotoTopAppBar
 import com.example.inventory.ui.navigation.NavigationDestination

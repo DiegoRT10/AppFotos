@@ -18,7 +18,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -47,7 +46,6 @@ import androidx.navigation.NavController
 import com.example.appfotos.ui.inicio.InicioDestination
 import com.example.appfotos.utils.AuthManager
 import com.example.appfotos.utils.AuthRes
-import com.example.appfotos.ui.theme.Purple40
 import kotlinx.coroutines.launch
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
