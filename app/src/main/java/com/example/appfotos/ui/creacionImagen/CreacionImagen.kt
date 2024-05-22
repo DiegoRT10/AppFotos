@@ -160,6 +160,7 @@ private fun CreacionImagenBody(
 
         if (readStorageGranted) {
             Toast.makeText(context, "Permiso de almacenamiento autorizado", Toast.LENGTH_SHORT).show()
+            galleryLauncher.launch("image/*")
         } else {
             Toast.makeText(context, "Permiso de almacenamiento denegado", Toast.LENGTH_SHORT).show()
         }
